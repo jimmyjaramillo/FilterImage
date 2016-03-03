@@ -1,4 +1,4 @@
-package 0.1;
+package imageFilter;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class CDVFilterImage extends CordovaPlugin {
+public class FilterImage extends CordovaPlugin {
     private JSONObject params;
     private String imgDecodableString;
     private String FileString = "";
@@ -55,19 +55,24 @@ public class CDVFilterImage extends CordovaPlugin {
         if (action.equals("coolMethod")) {
             this.params = args.getJSONObject(0);
             loadImagefromGallery();
-            this.coolMethod(listPathFile, callbackContext);
+            String[] listpathfile = new String[listPathFile.size()];
+            listpathfile = listPathFile.toArray(listpathfile);
+            this.coolMethod(listpathfile, callbackContext);
             return true;
         }
         return false;
     }
 
-    public void loadImagefromGallery() throws IOException {
+    public void loadImagefromGallery() {
         File file = new File ("/storage/sdcard0/DCIM");
-        typeFilter = valueFilter(this.params.DataTimeStart, this.params.DataTimeFinish, this.params.Latitude, this.params.Longitude, this.params.Radius);
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        //Date dateStar = sdf.parse(this.params.DataTimeStart);
+        //Date dateFinish = sdf.parse(this.params.DataTimeFinish);
+        typeFilter = valueFilter(this.params.getString("DataTimeStart") ,this.params.getString("DataTimeFinish"), this.params.getString("Latitude"), this.params.getString("Longitude"), this.params.getString("Radius"));
         systemFile(file.getAbsolutePath());
     }
 
-    public static Integer valueFilter (Date dateStar, Date dateFinish, Integer lat, Integer log, Integer rad) {
+    public static Integer valueFilter (String dateStar, String dateFinish, String lat, String log, String rad) {
 
         if (dateStar != null && dateFinish != null && lat != null && log != null && rad != null) {
             return 1;
@@ -158,9 +163,10 @@ public class CDVFilterImage extends CordovaPlugin {
         return 0;
     }
 
-    private void coolMethod(ArrayList<String> listImages, CallbackContext callbackContext) {
-        if (listImages.size() > 0) {
-            callbackContext.success(listImages);
+    private void coolMethod(String[] listImages, CallbackContext callbackContext) {
+        if (listImages.length > 0) {
+          JSONArray res = new JSONArray(listImages);
+            callbackContext.success(res);
         } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
