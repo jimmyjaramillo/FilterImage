@@ -54,22 +54,13 @@ public class FilterImage extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("coolMethod")) {
             this.params = args.getJSONObject(0);
-            loadImagefromGallery();
-            String[] listpathfile = new String[listPathFile.size()];
-            listpathfile = listPathFile.toArray(listpathfile);
-            this.coolMethod(listpathfile, callbackContext);
+            File file = new File ("/storage/sdcard0/DCIM");
+            typeFilter = valueFilter(this.params.getString("DataTimeStart") ,this.params.getString("DataTimeFinish"), this.params.getString("Latitude"), this.params.getString("Longitude"), this.params.getString("Radius"));
+            systemFile(file.getAbsolutePath());
+            this.coolMethod(listPathFile, callbackContext);
             return true;
         }
         return false;
-    }
-
-    public void loadImagefromGallery() {
-        File file = new File ("/storage/sdcard0/DCIM");
-        //SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        //Date dateStar = sdf.parse(this.params.DataTimeStart);
-        //Date dateFinish = sdf.parse(this.params.DataTimeFinish);
-        typeFilter = valueFilter(this.params.getString("DataTimeStart") ,this.params.getString("DataTimeFinish"), this.params.getString("Latitude"), this.params.getString("Longitude"), this.params.getString("Radius"));
-        systemFile(file.getAbsolutePath());
     }
 
     public static Integer valueFilter (String dateStar, String dateFinish, String lat, String log, String rad) {
@@ -163,8 +154,8 @@ public class FilterImage extends CordovaPlugin {
         return 0;
     }
 
-    private void coolMethod(String[] listImages, CallbackContext callbackContext) {
-        if (listImages.length > 0) {
+    private void coolMethod(ArrayList<String> listImages, CallbackContext callbackContext) {
+        if (listImages.size() > 0) {
           JSONArray res = new JSONArray(listImages);
             callbackContext.success(res);
         } else {
