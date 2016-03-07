@@ -1,4 +1,27 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="imageFilter" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"><name>FilterImage</name><description>
+<plugin id="imageFilter" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+  <name>FilterImage</name>
+  <description>
     filter images for geolocation and DateTime
-  </description><js-module name="FilterImage" src="www/FilterImage.js"><clobbers target="cordova.plugins.FilterImage" /></js-module><platform name="android"><config-file parent="/*" target="res/xml/config.xml"><feature name="FilterImage"><param name="android-package" value="0.1.FilterImage" /></feature></config-file><config-file parent="/*" target="AndroidManifest.xml" /><source-file src="src/android/FilterImage.java" target-dir="src/0/1/FilterImage" /></platform><platform name="ios"><config-file parent="/*" target="config.xml"><feature name="FilterImage"><param name="ios-package" value="FilterImage" /></feature></config-file><source-file src="src/ios/CDVFilterImage.m" /></platform></plugin>
+  </description>
+  <js-module name="FilterImage" src="www/FilterImage.js">
+    <clobbers target="FilterImage" />
+  </js-module>
+  <platform name="android">
+    <config-file parent="/*" target="res/xml/config.xml">
+      <feature name="FilterImage">
+        <param name="android-package" value="imageFilter.FilterImage" />
+      </feature>
+    </config-file>
+    <config-file parent="/*" target="AndroidManifest.xml" />
+    <source-file src="src/android/FilterImage.java" target-dir="src/imageFilter/FilterImage" />
+  </platform>
+  <platform name="ios">
+    <config-file parent="/*" target="config.xml">
+      <feature name="FilterImage">
+        <param name="ios-package" value="FilterImage" />
+      </feature>
+    </config-file>
+    <source-file src="src/ios/CDVFilterImage.m" />
+  </platform>
+</plugin>

@@ -1,7 +1,6 @@
 var exec = require('cordova/exec');
 
 exports.coolMethod = function(args, success, error) {
-
     var params = {
       Radius: args.radius ? args.radius: null,
       Latitude: args.latitude ? args.latitude: null,
@@ -9,5 +8,5 @@ exports.coolMethod = function(args, success, error) {
       DataTimeStart: args.dataTimeStart ? args.dataTimeStart: null,
       DataTimeFinish: args.dataTimeFinish ? args.dataTimeFinish: null
     };
-    exec(success, error, "FilterImage", "coolMethod", [params]);
+    return exec(success, error, "FilterImage", "coolMethod", [params]);
 };
